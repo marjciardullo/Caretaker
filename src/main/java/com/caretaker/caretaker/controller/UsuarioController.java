@@ -21,7 +21,7 @@ import com.caretaker.caretaker.model.Usuario;
 import com.caretaker.caretaker.service.UsuarioService;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/usuarios")
 public class UsuarioController implements ControllerInterface<Usuario>{
 	
 	@Autowired
