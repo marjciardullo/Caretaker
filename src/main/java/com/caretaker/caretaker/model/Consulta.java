@@ -6,8 +6,6 @@ import java.sql.Time;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -23,14 +21,14 @@ import lombok.Setter;
 public class Consulta extends AbstractEntity {
 	private static final long serialVersionUID = 1L;
 	
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.PERSIST)
 	private Usuario usuario;
 	
 	@Column(name = "nm_consulta")
 	private String nome;
 
 	@Column(name = "ds_consulta")
-	private String dosagem;
+	private String descricao;
 
 	@Column(name = "dt_consulta")
 	private Date data;
