@@ -13,11 +13,11 @@ public interface LembreteRepository extends JpaRepository<Lembrete, Long>{
 	
 	@Query(value = "select * from tb_lembrete" 
 			+"  Where hr_lembrete = ?1 AND dt_lembrete = ?2 AND "
-			+"  medicamento_pk_id = ?3 AND usuario_pk_id = ?4 limit 1", nativeQuery = true)
-	Optional<Lembrete> findByIds(String hora, String dt, Long medicamento, Long usuario);
+			+"  medicamento_pk_id = ?3 limit 1", nativeQuery = true)
+	Optional<Lembrete> findByIds(String hora, String dt, Long medicamento);
 	
 	@Query(value = "delete from tb_lembrete" 
 			+"  where hr_lembrete = ?1 AND dt_lembrete = ?2 AND "
-			+"  medicamento_pk_id = ?3 AND usuario_pk_id = ?4", nativeQuery = true)
-	void deleteByIds(String hora, String dt, Long medicamento, Long usuario);
+			+"  medicamento_pk_id = ?3", nativeQuery = true)
+	void deleteByIds(String hora, String dt, Long medicamento);
 }

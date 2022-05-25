@@ -20,8 +20,8 @@ public class LembreteService {
 		return null;
 	}
 	
-	public Lembrete findByIds(String hora, String data, Long medicamento, Long usuario) {
-		Optional<Lembrete> lembrete_obj = repository.findByIds(hora, data, medicamento, usuario);
+	public Lembrete findByIds(String hora, String data, Long medicamento) {
+		Optional<Lembrete> lembrete_obj = repository.findByIds(hora, data, medicamento);
 		return lembrete_obj.orElse(null);
 	}
 
@@ -31,8 +31,8 @@ public class LembreteService {
 	}
 
 
-	public boolean update(String hora, String data, Long medicamento, Long usuario, Lembrete lembrete) {
-		if (repository.findByIds(hora,data, medicamento, usuario) != null) {
+	public boolean update(String hora, String data, Long medicamento, Lembrete lembrete) {
+		if (repository.findByIds(hora,data, medicamento) != null) {
 			repository.save(lembrete);
 			return true;
 		}
@@ -42,10 +42,10 @@ public class LembreteService {
 	
 	public boolean delete(Lembrete lembrete) {
 		 if(repository.findByIds(lembrete.getHora().toString(), lembrete.getData().toString(), 
-					lembrete.getMedicamento().getId(), lembrete.getUsuario().getId()
+					lembrete.getMedicamento().getId()
 					) != null ) {
 			repository.deleteByIds(lembrete.getHora().toString(), lembrete.getData().toString(), 
-					lembrete.getMedicamento().getId(), lembrete.getUsuario().getId());
+					lembrete.getMedicamento().getId());
 			return true;
 		}
 		return false;

@@ -33,13 +33,12 @@ public class LembreteController {
 	}
 
 
-	@GetMapping("/{hora}/{data}/{medicamento}/{usuario}")
+	@GetMapping("/{hora}/{data}/{medicamento}")
 	public ResponseEntity<?> get(@PathVariable("hora") String hora, 
 			@PathVariable("data") String data,
-			@PathVariable("medicamento") Long medicamento,
-			@PathVariable("usuario") Long usuario) {
+			@PathVariable("medicamento") Long medicamento) {
 		
-		Lembrete lembrete = service.findByIds(hora, data, medicamento, usuario);
+		Lembrete lembrete = service.findByIds(hora, data, medicamento);
 		if (lembrete != null) {
 			return ResponseEntity.ok(lembrete);
 		}
@@ -49,23 +48,21 @@ public class LembreteController {
 	@PostMapping
 	public ResponseEntity<Lembrete> post(@RequestBody Lembrete lembrete) throws URISyntaxException {
 		service.create(lembrete);
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{hora}/{data}/{medicamento}/{usuario}")
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{hora}/{data}/{medicamento}")
 				.buildAndExpand(
 						lembrete.getHora(),
 						lembrete.getData(), 
-						lembrete.getMedicamento().getId(), 
-						lembrete.getUsuario().getId())
+						lembrete.getMedicamento().getId())
 				.toUri();
 		return ResponseEntity.created(location).body(lembrete);
 	}
 
-	@PutMapping("/{hora}/{data}/{medicamento}/{usuario}")
+	@PutMapping("/{hora}/{data}/{medicamento}")
 	public ResponseEntity<?> put(@PathVariable("hora") String hora, 
 			@PathVariable("data") String data,
 			@PathVariable("medicamento") Long medicamento,
-			@PathVariable("usuario") Long usuario,
 			@RequestBody Lembrete lembrete) {
-		if (service.update(hora, data, medicamento, usuario, lembrete)) {
+		if (service.update(hora, data, medicamento, lembrete)) {
 			return ResponseEntity.ok(lembrete);
 		}
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

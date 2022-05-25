@@ -30,10 +30,6 @@ public class Lembrete implements Serializable {
 	private Medicamento medicamento;
 	
 	@Id
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private Usuario usuario;
-	
-	@Id
 	@Column(name = "dt_lembrete")
 	private Date data;
 	
