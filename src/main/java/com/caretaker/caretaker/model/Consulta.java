@@ -1,11 +1,13 @@
 package com.caretaker.caretaker.model;
 
+import java.sql.Date;
+import java.sql.Time;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -17,30 +19,23 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Entity
-@IdClass(MedicamentoId.class)
-@Table(name = "tb_medicamento")
-public class Medicamento extends AbstractEntity {
+@Table(name = "tb_consulta")
+public class Consulta extends AbstractEntity {
 	private static final long serialVersionUID = 1L;
-	@Id
+	
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Usuario usuario;
 	
-	@Column(name = "nm_medicamento")
+	@Column(name = "nm_consulta")
 	private String nome;
 
-	@Column(name = "nm_dosagem")
+	@Column(name = "ds_consulta")
 	private String dosagem;
 
-	@Column(name = "qt_medicamento")
-	private Float qt_medicamento;
+	@Column(name = "dt_consulta")
+	private Date data;
 	
-	@Column(name = "ds_medicamento")
-	private String obs_medicamento;
-	
-	@Column(name = "qt_frequencia_diaria")
-	private Integer qt_frequencia_diaria;
-	
-	@Column(name = "ds_frequencia_horas")
-	private String ds_frequencia_horas;
+	@Column(name = "hr_consulta")
+	private Time hora;
 
 }
