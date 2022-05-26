@@ -20,8 +20,8 @@ public class MedicamentoService {
 	@Autowired
 	private MedicamentoMapper mapper;
 
-	public void create(MedicamentoDTO medicamento) {
-		repository.save(mapper.toEntity(medicamento));
+	public MedicamentoDTO create(MedicamentoDTO medicamento) {
+		return mapper.toDTO(repository.save(mapper.toEntity(medicamento)));
 	}
 	
 	public MedicamentoDTO findById(Long id) {

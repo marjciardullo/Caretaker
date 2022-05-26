@@ -33,7 +33,6 @@ public class MedicamentoController {
 		return ResponseEntity.ok(service.findAll());
 	}
 
-
 	@GetMapping("/{id}")
 	public ResponseEntity<?> get(@PathVariable("id") Long id) {
 		MedicamentoDTO medicamento = service.findById(id);
@@ -45,11 +44,11 @@ public class MedicamentoController {
 
 	@PostMapping
 	public ResponseEntity<MedicamentoDTO> post(@RequestBody MedicamentoDTO medicamento) throws URISyntaxException {
-		service.create(medicamento);
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{hora}/{data}/{medicamento}")
+		MedicamentoDTO medi = service.create(medicamento);
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(medicamento.getId())
 				.toUri();
-		return ResponseEntity.created(location).body(medicamento);
+		return ResponseEntity.created(location).body(medi);
 	}
 
 	@PutMapping("/{id}")
