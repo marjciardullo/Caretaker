@@ -51,7 +51,7 @@ public class MedicamentoController {
 		return ResponseEntity.created(location).body(medi);
 	}
 
-	@PutMapping("/{id}")
+	@PutMapping("")
 	public ResponseEntity<?> put(@RequestBody MedicamentoDTO medicamento) {
 		if (service.update(medicamento)) {
 			return ResponseEntity.ok(medicamento);
