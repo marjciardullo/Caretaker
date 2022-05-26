@@ -1,10 +1,8 @@
 package com.caretaker.caretaker.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -20,7 +18,7 @@ import lombok.Setter;
 public class Medicamento extends AbstractEntity {
 	private static final long serialVersionUID = 1L;
 	
-	@OneToOne(cascade = CascadeType.REMOVE)
+	@ManyToOne
 	private Usuario usuario;
 	
 	@Column(name = "nm_medicamento")
