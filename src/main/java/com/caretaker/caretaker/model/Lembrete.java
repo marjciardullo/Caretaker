@@ -11,7 +11,6 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -26,7 +25,7 @@ import lombok.Setter;
 @IdClass(Lembrete.class)
 public class Lembrete implements Serializable {
 	@Id
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne
 	private Medicamento medicamento;
 	
 	@Id

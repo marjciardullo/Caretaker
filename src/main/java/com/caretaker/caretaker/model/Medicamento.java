@@ -22,7 +22,7 @@ import lombok.Setter;
 public class Medicamento extends AbstractEntity {
 	private static final long serialVersionUID = 1L;
 	@Id
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.REMOVE)
 	private Usuario usuario;
 	
 	@Column(name = "nm_medicamento")

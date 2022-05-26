@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.caretaker.caretaker.DTO.LembreteDTO;
 import com.caretaker.caretaker.model.Lembrete;
 import com.caretaker.caretaker.service.LembreteService;
 
@@ -28,7 +29,7 @@ public class LembreteController {
 	private LembreteService service;
 
 	@GetMapping
-	public ResponseEntity<List<Lembrete>> getAll() {
+	public ResponseEntity<List<LembreteDTO>> getAll() {
 		return ResponseEntity.ok(service.findAll());
 	}
 
@@ -38,7 +39,7 @@ public class LembreteController {
 			@PathVariable("data") String data,
 			@PathVariable("medicamento") Long medicamento) {
 		
-		Lembrete lembrete = service.findByIds(hora, data, medicamento);
+		LembreteDTO lembrete = service.findByIds(hora, data, medicamento);
 		if (lembrete != null) {
 			return ResponseEntity.ok(lembrete);
 		}
@@ -46,13 +47,13 @@ public class LembreteController {
 	}
 
 	@PostMapping
-	public ResponseEntity<Lembrete> post(@RequestBody Lembrete lembrete) throws URISyntaxException {
+	public ResponseEntity<LembreteDTO> post(@RequestBody LembreteDTO lembrete) throws URISyntaxException {
 		service.create(lembrete);
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{hora}/{data}/{medicamento}")
 				.buildAndExpand(
 						lembrete.getHora(),
 						lembrete.getData(), 
-						lembrete.getMedicamento().getId())
+						lembrete.getId_medicamento())
 				.toUri();
 		return ResponseEntity.created(location).body(lembrete);
 	}
@@ -61,16 +62,18 @@ public class LembreteController {
 	public ResponseEntity<?> put(@PathVariable("hora") String hora, 
 			@PathVariable("data") String data,
 			@PathVariable("medicamento") Long medicamento,
-			@RequestBody Lembrete lembrete) {
+			@RequestBody LembreteDTO lembrete) {
 		if (service.update(hora, data, medicamento, lembrete)) {
 			return ResponseEntity.ok(lembrete);
 		}
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	}
 
-	@DeleteMapping
-	public ResponseEntity<?> delete(@RequestBody Lembrete lembrete) {
-		if (service.delete(lembrete)) {
+	@DeleteMapping("/{hora}/{data}/{medicamento}")
+	public ResponseEntity<?> delete(@PathVariable("hora") String hora, 
+			@PathVariable("data") String data,
+			@PathVariable("medicamento") Long medicamento) {
+		if (service.delete(hora, data, medicamento)) {
 			return ResponseEntity.ok().build();
 		}
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

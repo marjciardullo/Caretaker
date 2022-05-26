@@ -13,4 +13,5 @@ public class ConsultaDTO extends AbstractEntity {
 	public Date data;
 	public String descricao;
 	public String nome;
+	private Long id;
 }

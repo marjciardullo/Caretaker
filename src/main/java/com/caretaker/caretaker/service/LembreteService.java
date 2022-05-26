@@ -6,6 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.caretaker.caretaker.DTO.LembreteDTO;
+import com.caretaker.caretaker.mapper.LembreteMapper;
 import com.caretaker.caretaker.model.Lembrete;
 import com.caretaker.caretaker.repository.LembreteRepository;
 
@@ -14,38 +16,40 @@ public class LembreteService {
 
 	@Autowired
 	private LembreteRepository repository;
+	
+	@Autowired
+	private LembreteMapper mapper;
 
-	public Lembrete create(Lembrete lembrete) {
+	public void create(LembreteDTO obj) {
+		Lembrete lembrete = mapper.toEntity(obj);
 		repository.save(lembrete);
-		return null;
 	}
 	
-	public Lembrete findByIds(String hora, String data, Long medicamento) {
+	public LembreteDTO findByIds(String hora, String data, Long medicamento) {
 		Optional<Lembrete> lembrete_obj = repository.findByIds(hora, data, medicamento);
-		return lembrete_obj.orElse(null);
+		if (lembrete_obj.isPresent())
+			return mapper.toDTO(lembrete_obj.get());
+		return null;
 	}
 
 
-	public List<Lembrete> findAll() {
-		return repository.findAll();
+	public List<LembreteDTO> findAll() {
+		return mapper.toDTO(repository.findAll());
 	}
 
 
-	public boolean update(String hora, String data, Long medicamento, Lembrete lembrete) {
+	public boolean update(String hora, String data, Long medicamento, LembreteDTO lembrete) {
 		if (repository.findByIds(hora,data, medicamento) != null) {
-			repository.save(lembrete);
+			repository.save(mapper.toEntity(lembrete));
 			return true;
 		}
 		return false;
 	}
 
 	
-	public boolean delete(Lembrete lembrete) {
-		 if(repository.findByIds(lembrete.getHora().toString(), lembrete.getData().toString(), 
-					lembrete.getMedicamento().getId()
-					) != null ) {
-			repository.deleteByIds(lembrete.getHora().toString(), lembrete.getData().toString(), 
-					lembrete.getMedicamento().getId());
+	public boolean delete(String hora, String data, Long medicamento) {
+		 if(repository.findByIds(hora, data, medicamento) != null ) {
+			repository.deleteByIds(hora, data, medicamento);
 			return true;
 		}
 		return false;

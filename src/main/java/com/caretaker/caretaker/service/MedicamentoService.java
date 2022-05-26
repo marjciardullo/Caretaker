@@ -10,29 +10,25 @@ import com.caretaker.caretaker.model.Medicamento;
 import com.caretaker.caretaker.repository.MedicamentoRepository;
 
 @Service
-public class MedicamentoService implements ServiceInterface<Medicamento>{
+public class MedicamentoService {
 
 	@Autowired
 	private MedicamentoRepository repository;
 
-	@Override
 	public Medicamento create(Medicamento medicamento) {
 		repository.save(medicamento);
 		return null;
 	}
 	
-	@Override
-	public Medicamento findById(Long id) {
-		Optional<Medicamento> medicamento_obj = repository.findById(id);
+	public Medicamento findByIds(Long id, Long usuario) {
+		Optional<Medicamento> medicamento_obj = repository.findByIds(id, usuario);
 		return medicamento_obj.orElse(null);
 	}
 
-	@Override
 	public List<Medicamento> findAll() {
 		return repository.findAll();
 	}
 
-	@Override
 	public boolean update(Medicamento medicamento) {
 		if (repository.existsById(medicamento.getId())) {
 			repository.save(medicamento);
@@ -41,7 +37,6 @@ public class MedicamentoService implements ServiceInterface<Medicamento>{
 		return false;
 	}
 
-	@Override
 	public boolean delete(Long id) {
 		if (repository.existsById(id)) {
 			repository.deleteById(id);

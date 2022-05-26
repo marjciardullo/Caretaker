@@ -10,5 +10,4 @@ import lombok.Setter;
 @MappedSuperclass
 public abstract class AbstractEntity {
 	public Long id_usuario;
-	private Long id;
 }
