@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.caretaker.caretaker.DTO.LembreteDTO;
+import com.caretaker.caretaker.DTO.MedicamentoDTO;
 import com.caretaker.caretaker.model.Lembrete;
 import com.caretaker.caretaker.model.Medicamento;
 import com.caretaker.caretaker.service.MedicamentoService;
@@ -22,6 +23,9 @@ public class LembreteMapper {
 	@Autowired
 	private MedicamentoService service;
 	
+	@Autowired
+	private MedicamentoMapper mapper;
+	
 	public Lembrete toEntity(LembreteDTO lembreteDTO) {
 		Lembrete lembrete = new Lembrete();
 		
@@ -31,23 +35,23 @@ public class LembreteMapper {
 		Time hora = Time.valueOf(lembreteDTO.getHora());
 		lembrete.setHora(hora);
 		
-		Medicamento medicamento = service.findByIds(lembreteDTO.getId_medicamento(), lembreteDTO.getId_usuario());
+		MedicamentoDTO medicamentoDTO = service.findById(lembreteDTO.getId_medicamento());
+		Medicamento medicamento = mapper.toEntity(medicamentoDTO);
 		lembrete.setMedicamento(medicamento);
 		
+		lembrete.setId_medicamento(medicamento.getId());
 		return lembrete;
 	}
 	
 	public LembreteDTO toDTO(Lembrete lembrete) {
 		LembreteDTO lembreteDTO = new LembreteDTO();
+
+		lembreteDTO.setData(lembrete.getData().toString());
 		
-		Date data = Date.valueOf(lembreteDTO.getData());
-		lembrete.setData(data);
+		lembreteDTO.setHora(lembrete.getHora().toString());
 		
-		Time hora = Time.valueOf(lembreteDTO.getHora());
-		lembrete.setHora(hora);
-		
-		lembreteDTO.setId_usuario(lembrete.getMedicamento().getUsuario().getId());
 		lembreteDTO.setId_medicamento(lembrete.getMedicamento().getId());
+		
 		return lembreteDTO;
 	}
 	

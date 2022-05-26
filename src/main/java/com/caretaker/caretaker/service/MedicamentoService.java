@@ -6,6 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.caretaker.caretaker.DTO.MedicamentoDTO;
+import com.caretaker.caretaker.mapper.MedicamentoMapper;
 import com.caretaker.caretaker.model.Medicamento;
 import com.caretaker.caretaker.repository.MedicamentoRepository;
 
@@ -14,24 +16,29 @@ public class MedicamentoService {
 
 	@Autowired
 	private MedicamentoRepository repository;
+	
+	@Autowired
+	private MedicamentoMapper mapper;
 
-	public Medicamento create(Medicamento medicamento) {
-		repository.save(medicamento);
-		return null;
+	public void create(MedicamentoDTO medicamento) {
+		repository.save(mapper.toEntity(medicamento));
 	}
 	
-	public Medicamento findByIds(Long id, Long usuario) {
-		Optional<Medicamento> medicamento_obj = repository.findByIds(id, usuario);
-		return medicamento_obj.orElse(null);
+	public MedicamentoDTO findById(Long id) {
+		Optional<Medicamento> medicamento_obj = repository.findById(id);
+		
+		if (medicamento_obj.isPresent())
+			return mapper.toDTO(medicamento_obj.get());
+		return null;
 	}
 
-	public List<Medicamento> findAll() {
-		return repository.findAll();
+	public List<MedicamentoDTO> findAll() {
+		return  mapper.toDTO(repository.findAll());
 	}
 
-	public boolean update(Medicamento medicamento) {
+	public boolean update(MedicamentoDTO medicamento) {
 		if (repository.existsById(medicamento.getId())) {
-			repository.save(medicamento);
+			repository.save(mapper.toEntity(medicamento));
 			return true;
 		}
 		return false;

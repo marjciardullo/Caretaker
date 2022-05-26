@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class LembreteDTO extends AbstractEntity {
+public class LembreteDTO {
 	public String hora;
 	public String data;
 	public Long id_medicamento;

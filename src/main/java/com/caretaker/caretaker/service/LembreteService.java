@@ -3,6 +3,8 @@ package com.caretaker.caretaker.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,7 @@ import com.caretaker.caretaker.model.Lembrete;
 import com.caretaker.caretaker.repository.LembreteRepository;
 
 @Service
+@Transactional
 public class LembreteService {
 
 	@Autowired
@@ -40,6 +43,7 @@ public class LembreteService {
 
 	public boolean update(String hora, String data, Long medicamento, LembreteDTO lembrete) {
 		if (repository.findByIds(hora,data, medicamento) != null) {
+			delete(hora, data, medicamento);
 			repository.save(mapper.toEntity(lembrete));
 			return true;
 		}

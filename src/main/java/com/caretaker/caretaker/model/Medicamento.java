@@ -3,7 +3,6 @@ package com.caretaker.caretaker.model;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.OneToOne;
@@ -17,11 +16,10 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Entity
-@IdClass(MedicamentoId.class)
 @Table(name = "tb_medicamento")
 public class Medicamento extends AbstractEntity {
 	private static final long serialVersionUID = 1L;
-	@Id
+	
 	@OneToOne(cascade = CascadeType.REMOVE)
 	private Usuario usuario;
 	
