@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.caretaker.caretaker.DTO.LembreteDTO;
-import com.caretaker.caretaker.model.Lembrete;
 import com.caretaker.caretaker.service.LembreteService;
 
 @RestController
@@ -31,6 +30,11 @@ public class LembreteController {
 	@GetMapping
 	public ResponseEntity<List<LembreteDTO>> getAll() {
 		return ResponseEntity.ok(service.findAll());
+	}
+	
+	@GetMapping("/usuario/{id}")
+	public ResponseEntity<List<LembreteDTO>> getAll(@PathVariable("id") Long id) {
+		return ResponseEntity.ok(service.findByUser(id));
 	}
 
 

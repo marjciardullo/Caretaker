@@ -39,6 +39,10 @@ public class LembreteService {
 	public List<LembreteDTO> findAll() {
 		return mapper.toDTO(repository.findAll());
 	}
+	
+	public List<LembreteDTO> findByUser(Long id) {
+		return mapper.toDTO(repository.findByUser(id));
+	}
 
 
 	public boolean update(String hora, String data, Long medicamento, LembreteDTO lembrete) {
