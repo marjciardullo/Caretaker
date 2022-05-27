@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.caretaker.caretaker.DTO.ConsultaDTO;
-import com.caretaker.caretaker.model.Consulta;
 import com.caretaker.caretaker.service.ConsultaService;
 
 @RestController
@@ -42,6 +41,11 @@ public class ConsultaController implements ControllerInterface<ConsultaDTO>{
 			return ResponseEntity.ok(obj);
 		}
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+	}
+	
+	@GetMapping("/usuario/{id}")
+	public ResponseEntity<List<ConsultaDTO>> getByUser(@PathVariable("id") Long id) {
+		return ResponseEntity.ok(service.findByUser(id));
 	}
 
 	@Override

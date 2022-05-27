@@ -39,6 +39,10 @@ public class ConsultaService implements ServiceInterface<ConsultaDTO>{
 		return mapper.toDTO(repository.findAll());
 	}
 
+	public List<ConsultaDTO> findByUser(Long id) {
+		return mapper.toDTO(repository.findByUser(id));
+	}
+	
 	@Override
 	public boolean update(ConsultaDTO consulta) {
 		if (repository.existsById(consulta.getId())) {
