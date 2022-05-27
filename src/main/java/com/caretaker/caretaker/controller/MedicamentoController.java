@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.caretaker.caretaker.DTO.MedicamentoDTO;
-import com.caretaker.caretaker.model.Medicamento;
 import com.caretaker.caretaker.service.MedicamentoService;
 
 @RestController
@@ -40,6 +39,11 @@ public class MedicamentoController {
 			return ResponseEntity.ok(medicamento);
 		}
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+	}
+	
+	@GetMapping("/usuario/{id}")
+	public ResponseEntity<List<MedicamentoDTO>> getByUser(@PathVariable("id") Long id) {
+		return ResponseEntity.ok(service.findByUser(id));
 	}
 
 	@PostMapping

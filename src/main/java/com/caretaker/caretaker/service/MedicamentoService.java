@@ -24,6 +24,12 @@ public class MedicamentoService {
 		return mapper.toDTO(repository.save(mapper.toEntity(medicamento)));
 	}
 	
+	public List<MedicamentoDTO> findByUser(Long id) {
+		List<Medicamento> medicamentos_obj = repository.findByUser(id);
+		
+		return mapper.toDTO(medicamentos_obj);
+	}
+	
 	public MedicamentoDTO findById(Long id) {
 		Optional<Medicamento> medicamento_obj = repository.findById(id);
 		
