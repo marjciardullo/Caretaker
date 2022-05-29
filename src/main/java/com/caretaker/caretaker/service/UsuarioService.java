@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.caretaker.caretaker.model.Usuario;
@@ -14,9 +15,13 @@ public class UsuarioService implements ServiceInterface<Usuario> {
 	
 	@Autowired
 	private UsuarioRepository repository;
+	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 
 	@Override
 	public Usuario create(Usuario usuario) {
+		usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
 		repository.save(usuario);
 		return null;
 	}

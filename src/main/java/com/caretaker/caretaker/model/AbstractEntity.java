@@ -10,8 +10,6 @@ import javax.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
 @MappedSuperclass
 public abstract class AbstractEntity implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -20,4 +18,12 @@ public abstract class AbstractEntity implements Serializable{
 	@GeneratedValue
 	@Column(name = "pk_id")
 	private Long id;
+	
+	public Long getId() {
+		return id;
+	}
+	
+	public void setId(Long id) {
+		this.id = id;
+	}
 }

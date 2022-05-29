@@ -1,14 +1,22 @@
 package com.caretaker.caretaker.model;
 
 import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "tb_usuario")
@@ -34,11 +42,25 @@ public class Usuario extends AbstractEntity {
 
 	@Column(name = "ic_cuidador")
 	private Boolean cuidador;
+	
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name = "tb_tipo_usuario")
+	private Set<Integer> usuarios = new HashSet<>();
 
 	public Usuario() {
 	}
 
 	// getters + setters
+	
+	public Set<TipoUsuario> getUsuarios() {
+		return usuarios.stream()
+				.map(x -> TipoUsuario.toEnum(x))
+				.collect(Collectors.toSet());
+	}
+	
+	public void addUsuario(TipoUsuario usuario) {
+		this.usuarios.add(usuario.getCod());
+	}
 
 	public String getLogin() {
 		return login;
@@ -56,10 +78,12 @@ public class Usuario extends AbstractEntity {
 		this.email = email;
 	}
 
+	@JsonIgnore
 	public String getSenha() {
 		return senha;
 	}
-
+	
+	@JsonProperty
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
