@@ -34,7 +34,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private UsuarioRepository usuariorepo;
 	
 	private static final String[] PUBLIC_MATCHERS = {
-			"/usuarios/**"
+			"/usuarios/**",
+			"/consulta/**",
+			"/lembrete/**",
+			"/medicamento/**"
 	};
 	
 	private static final String[] PUBLIC_MATCHERS_POST = {
