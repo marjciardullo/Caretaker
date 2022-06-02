@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.caretaker.caretaker.DTO.LembreteDTO;
+import com.caretaker.caretaker.DTO.LembretePostDTO;
 import com.caretaker.caretaker.service.LembreteService;
 
 @RestController
@@ -51,13 +52,18 @@ public class LembreteController {
 	}
 
 	@PostMapping
-	public ResponseEntity<LembreteDTO> post(@RequestBody LembreteDTO lembrete) throws URISyntaxException {
-		service.create(lembrete);
+	public ResponseEntity<LembretePostDTO> post(@RequestBody LembretePostDTO lembrete) throws URISyntaxException {
+		LembreteDTO lembreteDTO = new LembreteDTO();
+		lembreteDTO.setData(lembrete.getData());
+		lembreteDTO.setHora(lembrete.getHora());
+		lembreteDTO.setId_medicamento(lembrete.getId_medicamento());
+		
+		service.create(lembreteDTO);
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{hora}/{data}/{medicamento}")
 				.buildAndExpand(
 						lembrete.getHora(),
 						lembrete.getData(), 
-						lembrete.getMedicamento().getId())
+						lembrete.getId_medicamento())
 				.toUri();
 		return ResponseEntity.created(location).body(lembrete);
 	}
