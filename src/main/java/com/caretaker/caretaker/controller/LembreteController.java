@@ -57,7 +57,7 @@ public class LembreteController {
 				.buildAndExpand(
 						lembrete.getHora(),
 						lembrete.getData(), 
-						lembrete.getId_medicamento())
+						lembrete.getMedicamento().getId())
 				.toUri();
 		return ResponseEntity.created(location).body(lembrete);
 	}

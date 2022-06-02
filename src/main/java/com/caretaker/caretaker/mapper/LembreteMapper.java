@@ -52,6 +52,8 @@ public class LembreteMapper {
 		
 		lembreteDTO.setId_medicamento(lembrete.getMedicamento().getId());
 		
+		lembreteDTO.setMedicamento(lembrete.getMedicamento());
+		
 		return lembreteDTO;
 	}
 	
