@@ -47,6 +47,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			"/medicamento/**"
 	};
 	
+	private static final String[] PUBLIC_MATCHERS_DELETE = {
+			"/usuarios/**",
+			"/consulta/**",
+			"/lembrete/**",
+			"/medicamento/**"
+	};
+	
+	private static final String[] PUBLIC_MATCHERS_PUT = {
+			"/usuarios/**",
+			"/consulta/**",
+			"/lembrete/**",
+			"/medicamento/**"
+	};
+	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.cors().and().csrf().disable();
@@ -55,6 +69,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers(HttpMethod.GET, PUBLIC_MATCHERS).permitAll()
 		.antMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
 		.antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()
+		.antMatchers(HttpMethod.DELETE, PUBLIC_MATCHERS_DELETE).permitAll()
+		.antMatchers(HttpMethod.PUT, PUBLIC_MATCHERS_PUT).permitAll()
 		.anyRequest()
 		.authenticated();
 		
